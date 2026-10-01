@@ -1,0 +1,234 @@
+.capabilities {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.pin {
+  position: relative;
+}
+
+.inner {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100svh;
+  min-height: 640px;
+  padding-top: calc(var(--nav-h) + var(--s-6));
+  padding-bottom: var(--s-6);
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  min-height: 0;
+  margin-top: var(--s-8);
+}
+
+/* ---- panel ---- */
+.panel {
+  grid-column: 1 / span 4;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.title {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-display);
+  line-height: 1;
+}
+
+.intro {
+  margin-top: var(--s-5);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: var(--c-text-2);
+  max-width: 24rem;
+}
+
+.tabs {
+  margin-top: clamp(1.5rem, 4vh, 2.75rem);
+  border-top: var(--border);
+}
+
+.tab {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem 1.5rem 1fr auto;
+  align-items: center;
+  width: 100%;
+  padding: 0.95rem 0;
+  border-bottom: var(--border);
+  text-align: left;
+  color: var(--c-text-3);
+  transition: color var(--dur-ui) var(--ease-out-soft);
+}
+
+.tabIndex,
+.tabCount {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+}
+
+.tabIcon {
+  display: inline-grid;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+.tabName {
+  font-size: 1.0625rem;
+  font-weight: var(--fw-medium);
+  letter-spacing: -0.015em;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+.tab:hover,
+.tab[aria-selected='true'] {
+  color: var(--c-text);
+}
+
+.tab[aria-selected='true'] .tabIndex {
+  color: var(--c-signal);
+}
+
+.tab[aria-selected='true'] .tabName {
+  transform: translateX(4px);
+}
+
+.tabBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.tabBar span {
+  position: absolute;
+  inset: 0;
+  background: var(--c-text);
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+}
+
+.detail {
+  margin-top: var(--s-6);
+  min-height: 0;
+}
+
+.detailInner {
+  animation: detail-in 600ms var(--ease-out) both;
+}
+
+@keyframes detail-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.description {
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: var(--c-text-2);
+}
+
+.listLabel {
+  margin-top: var(--s-5);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  text-transform: uppercase;
+  color: var(--c-text-3);
+}
+
+.skillList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0;
+  margin-top: var(--s-3);
+}
+
+.skillList li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.skillList li:not(:last-child)::after {
+  content: '/';
+  margin: 0 0.55rem;
+  color: var(--c-text-4);
+  font-size: var(--fs-micro);
+}
+
+.skill {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.02em;
+  color: var(--c-text-2);
+  background-image: linear-gradient(var(--c-signal), var(--c-signal));
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition:
+    color var(--dur-fast) var(--ease-out-soft),
+    background-size var(--dur-ui) var(--ease-out);
+}
+
+.skill:hover,
+.skill[data-hot='true'] {
+  color: var(--c-text);
+  background-size: 100% 1px;
+}
+
+.overview {
+  display: grid;
+  gap: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-text-3);
+}
+
+.overviewCode {
+  display: inline-block;
+  width: 2.75rem;
+  color: var(--c-text);
+}
+
+/* ---- graph ---- */
+.graph {
+  grid-column: 5 / span 8;
+  min-height: 0;
+  margin-right: calc(var(--margin) * -0.3);
+}
+
+/* Short desktop viewports */
+@media (min-width: 1024px) and (max-height: 820px) {
+  .intro {
+    display: none;
+  }
+  .tab {
+    padding: 0.7rem 0;
+  }
+  .stage {
+    margin-top: var(--s-5);
+  }
+}
+
+/* ---- below desktop: the dedicated mobile network takes over ---- */
+@media (max-width: 1023px) {
+  .inner {
+    display: block;
+    height: auto;
+    min-height: 0;
+    padding-block: var(--section-y);
+  }
+  .stage {
+    display: none;
+  }
+}

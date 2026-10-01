@@ -1,0 +1,120 @@
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-menu);
+  padding-top: var(--nav-h);
+  background: var(--c-void);
+  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  transition:
+    clip-path 700ms var(--ease-in-out),
+    visibility 0s linear 700ms;
+}
+
+.menu[data-open='true'] {
+  clip-path: inset(0 0 0 0);
+  visibility: visible;
+  transition:
+    clip-path 700ms var(--ease-in-out),
+    visibility 0s;
+}
+
+/* The nav stays above the menu so its close button remains reachable. */
+:global(html:has(#mobile-menu[data-open='true'])) [data-nav] {
+  z-index: calc(var(--z-menu) + 1);
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+
+.inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--s-8);
+  padding-bottom: max(var(--s-8), env(safe-area-inset-bottom));
+}
+
+.kicker {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--s-4);
+  border-bottom: var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  text-transform: uppercase;
+  color: var(--c-text-3);
+}
+
+.list {
+  margin-top: var(--s-4);
+}
+
+.list li {
+  border-bottom: var(--border);
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 500ms var(--ease-out-soft),
+    transform 800ms var(--ease-out);
+}
+
+.menu[data-open='true'] .list li {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(220ms + var(--i) * 55ms);
+}
+
+.link {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr auto;
+  align-items: baseline;
+  padding: var(--s-4) 0;
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--c-text-3);
+}
+
+.label {
+  font-size: clamp(2rem, 9vw, 3.25rem);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-display);
+  line-height: 1;
+}
+
+.module {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  text-transform: uppercase;
+  color: var(--c-text-4);
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  text-transform: uppercase;
+  color: var(--c-text-2);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.email {
+  color: var(--c-text);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: var(--fs-small);
+}

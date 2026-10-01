@@ -1,0 +1,91 @@
+.indicator {
+  position: fixed;
+  top: 50%;
+  right: calc(var(--margin) * 0.38);
+  z-index: var(--z-indicator);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-4);
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  text-transform: uppercase;
+  color: var(--c-text-3);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-reveal) var(--ease-out-soft);
+}
+
+.indicator[data-visible='true'] {
+  opacity: 1;
+}
+
+.count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.current {
+  color: var(--c-text);
+  animation: roll 600ms var(--ease-out) both;
+}
+
+.total {
+  color: var(--c-text-4);
+  font-size: 0.5625rem;
+}
+
+.track {
+  position: relative;
+  width: 1px;
+  height: clamp(6rem, 18vh, 10rem);
+  background: var(--c-line-2);
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--c-text);
+  transform: scaleY(var(--p, 0));
+  transform-origin: top;
+}
+
+.tick {
+  position: absolute;
+  left: -3px;
+  top: calc(var(--y) * 100%);
+  width: 7px;
+  height: 1px;
+  background: var(--c-text-4);
+  transition:
+    background-color var(--dur-ui) var(--ease-out-soft),
+    width var(--dur-ui) var(--ease-out);
+}
+
+.tick[data-active='true'] {
+  background: var(--c-signal);
+}
+
+.label {
+  writing-mode: vertical-rl;
+  color: var(--c-text-2);
+  animation: roll 700ms var(--ease-out) both;
+}
+
+@keyframes roll {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(2px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .indicator {
+    display: none;
+  }
+}

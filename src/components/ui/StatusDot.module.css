@@ -1,0 +1,40 @@
+.dot {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tone);
+  box-shadow: 0 0 10px var(--tone);
+}
+
+.dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--tone);
+  opacity: 0;
+  animation: pulse 2.8s var(--ease-out) infinite;
+}
+
+.signal {
+  --tone: var(--c-signal);
+}
+
+.accent {
+  --tone: var(--c-accent);
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.4);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}

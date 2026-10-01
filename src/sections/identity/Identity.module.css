@@ -1,0 +1,227 @@
+.identity {
+  position: relative;
+  z-index: var(--z-content);
+  padding-block: var(--section-y);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  margin-top: clamp(3rem, 8vh, 6rem);
+}
+
+/* ---- spec sheet ---- */
+.spec {
+  grid-column: 1 / span 4;
+  align-self: start;
+  position: sticky;
+  top: calc(var(--nav-h) + var(--s-8));
+  border: var(--border-2);
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, rgba(20, 24, 28, 0.72), rgba(10, 12, 14, 0.72));
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.specHead,
+.specFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-3) var(--s-5);
+  color: var(--c-text-3);
+}
+
+.specHead {
+  border-bottom: var(--border);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--c-signal);
+}
+
+.specList {
+  padding: var(--s-2) 0;
+}
+
+.specRow {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  gap: var(--s-3);
+  align-items: baseline;
+  padding: 0.7rem var(--s-5);
+  transition: background-color var(--dur-fast) var(--ease-out-soft);
+}
+
+.specRow:hover {
+  background: rgba(220, 235, 251, 0.025);
+}
+
+.specRow + .specRow {
+  border-top: 1px dashed var(--c-line);
+}
+
+.specRow dt {
+  color: var(--c-text-3);
+}
+
+.specRow dd {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--c-text);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  word-break: break-word;
+}
+
+.specFoot {
+  border-top: var(--border);
+  color: var(--c-text-4);
+}
+
+/* ---- content ---- */
+.content {
+  grid-column: 6 / span 7;
+}
+
+.statement {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  letter-spacing: -0.025em;
+  font-weight: var(--fw-regular);
+  color: var(--c-text);
+  text-wrap: pretty;
+}
+
+.word {
+  will-change: opacity;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gutter);
+  margin-top: clamp(3rem, 7vh, 5rem);
+  padding-top: var(--s-8);
+  border-top: var(--border);
+}
+
+.bodyText {
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--c-text-2);
+}
+
+.principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter);
+  margin-top: clamp(3.5rem, 9vh, 6rem);
+}
+
+.principle {
+  position: relative;
+  padding-top: var(--s-5);
+}
+
+.principleRule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--c-line-3);
+  transform-origin: left;
+}
+
+.principleIndex {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  color: var(--c-signal);
+}
+
+.principleTitle {
+  margin-top: var(--s-6);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-heading);
+}
+
+.principleText {
+  margin-top: var(--s-3);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: var(--c-text-2);
+  max-width: 22rem;
+}
+
+@media (max-width: 1279px) {
+  .spec {
+    grid-column: 1 / span 5;
+  }
+  .content {
+    grid-column: 6 / span 7;
+  }
+  .body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-12);
+  }
+  .spec {
+    position: relative;
+    top: 0;
+    order: 2;
+  }
+  .content {
+    display: contents;
+  }
+  .statement {
+    order: 1;
+  }
+  .body {
+    order: 3;
+    margin-top: 0;
+  }
+  .principles {
+    order: 4;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .principles {
+    grid-template-columns: 1fr;
+    gap: var(--s-8);
+  }
+  .specRow {
+    grid-template-columns: 6.25rem 1fr;
+    padding-inline: var(--s-4);
+  }
+  .specHead,
+  .specFoot {
+    padding-inline: var(--s-4);
+  }
+  .specFoot span:first-child {
+    display: none;
+  }
+  .principleTitle {
+    margin-top: var(--s-4);
+  }
+}

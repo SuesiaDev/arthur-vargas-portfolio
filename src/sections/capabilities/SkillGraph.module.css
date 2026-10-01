@@ -1,0 +1,400 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.patternDot {
+  fill: rgba(196, 214, 232, 0.09);
+}
+
+/* ---- core ↔ hub links ---- */
+.link {
+  fill: none;
+  stroke: var(--c-line-3);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  transition: stroke var(--dur-ui) var(--ease-out-soft);
+}
+
+.links [data-active='true'] .link {
+  stroke: rgba(156, 200, 242, 0.6);
+}
+
+.packet {
+  fill: var(--c-ice);
+  filter: drop-shadow(0 0 3px rgba(156, 200, 242, 0.9));
+}
+
+/* ---- cross-domain links ---- */
+.crossPath {
+  fill: none;
+  stroke: var(--c-signal);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.85;
+  animation: flow 1.2s linear infinite;
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+/* ---- hubs ---- */
+.hub {
+  transition: opacity var(--dur-ui) var(--ease-out-soft);
+}
+
+.hub[data-state='dim'] {
+  opacity: 0.42;
+}
+
+.orbit {
+  fill: none;
+  stroke: var(--c-line-2);
+  stroke-dasharray: 2 6;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  transform: scale(0.3);
+  transition:
+    opacity 900ms var(--ease-out-soft),
+    transform 1100ms var(--ease-out);
+}
+
+.hub[data-state='open'] .orbit {
+  opacity: 1;
+  transform: none;
+}
+
+.spoke {
+  stroke: var(--c-line-2);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  transform: rotate(var(--a)) scaleX(var(--r));
+  transition:
+    transform 1100ms var(--ease-out) var(--d),
+    stroke var(--dur-fast) var(--ease-out-soft);
+}
+
+.hub[data-state='open'] .spoke {
+  stroke: rgba(156, 200, 242, 0.32);
+  stroke-dasharray: 3 3;
+  animation: flow 1.6s linear infinite reverse;
+}
+
+.spoke[data-hot='true'] {
+  stroke: var(--c-accent) !important;
+  stroke-dasharray: none !important;
+}
+
+.hubNode {
+  cursor: pointer;
+}
+
+.hubHalo {
+  fill: none;
+  stroke: var(--c-line);
+  transform: scale(0.9);
+  opacity: 0;
+  transition:
+    transform 900ms var(--ease-out),
+    opacity var(--dur-ui) var(--ease-out-soft);
+}
+
+.hub[data-state='open'] .hubHalo,
+.hubNode:hover .hubHalo {
+  transform: scale(1.2);
+  opacity: 1;
+}
+
+.hubRing {
+  fill: none;
+  stroke: var(--c-line-3);
+  vector-effect: non-scaling-stroke;
+  transition: stroke var(--dur-ui) var(--ease-out-soft);
+}
+
+.hub[data-state='open'] .hubRing {
+  stroke: var(--c-accent);
+}
+
+.hubFill {
+  fill: var(--c-surface);
+  transition: fill var(--dur-ui) var(--ease-out-soft);
+}
+
+.hub[data-state='open'] .hubFill {
+  fill: var(--c-text);
+}
+
+.hubCode {
+  fill: var(--c-text);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  transition: fill var(--dur-ui) var(--ease-out-soft);
+}
+
+.hubIndex {
+  fill: var(--c-text-3);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+}
+
+.hub[data-state='open'] .hubCode {
+  fill: var(--c-void);
+}
+
+.hub[data-state='open'] .hubIndex {
+  fill: rgba(3, 4, 5, 0.5);
+}
+
+.hubName {
+  fill: var(--c-text-2);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  transform: translateY(var(--ty));
+  transition:
+    transform 1100ms var(--ease-out),
+    opacity var(--dur-ui) var(--ease-out-soft);
+}
+
+.hub[data-state='open'] .hubName {
+  opacity: 0;
+}
+
+/* ---- satellites ---- */
+.sat {
+  transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1));
+  transition: transform 1100ms var(--ease-out) var(--d);
+}
+
+.hit {
+  fill: transparent;
+}
+
+.satBg {
+  fill: var(--c-bg-2);
+  stroke: var(--c-line-3);
+  vector-effect: non-scaling-stroke;
+  transform: scale(0.24);
+  transition:
+    transform 900ms var(--ease-out) var(--d),
+    fill var(--dur-fast) var(--ease-out-soft),
+    stroke var(--dur-fast) var(--ease-out-soft);
+}
+
+.hub:not([data-state='open']) .satBg {
+  fill: var(--c-text-3);
+  stroke: none;
+}
+
+.hub[data-state='open'] .satBg {
+  transform: none;
+}
+
+.satIcon {
+  color: var(--c-text-2);
+  opacity: 0;
+  transition:
+    opacity 500ms var(--ease-out-soft),
+    color var(--dur-fast) var(--ease-out-soft);
+}
+
+.hub[data-state='open'] .satIcon {
+  opacity: 1;
+  transition-delay: calc(var(--d) + 300ms), 0ms;
+}
+
+.satLabel {
+  fill: var(--c-text-2);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition:
+    opacity 500ms var(--ease-out-soft),
+    fill var(--dur-fast) var(--ease-out-soft);
+  pointer-events: none;
+}
+
+.hub[data-state='open'] .satLabel {
+  opacity: 1;
+  transition-delay: calc(var(--d) + 380ms), 0ms;
+}
+
+.hub[data-state='open'] .sat {
+  cursor: pointer;
+}
+
+/* hover focus inside the open domain */
+.svg[data-hovering='true'] .hub[data-state='open'] .sat:not([data-hot='true']):not([data-related='true']) {
+  opacity: 0.38;
+}
+
+.sat {
+  transition:
+    transform 1100ms var(--ease-out) var(--d),
+    opacity var(--dur-ui) var(--ease-out-soft);
+}
+
+.sat[data-hot='true'] .satBg {
+  fill: var(--c-text);
+  stroke: var(--c-text);
+}
+
+.sat[data-hot='true'] .satIcon {
+  color: var(--c-void);
+}
+
+.sat[data-hot='true'] .satLabel {
+  fill: var(--c-text);
+}
+
+.sat[data-related='true'] .satBg {
+  stroke: var(--c-signal);
+  fill: var(--c-bg-2);
+  transform: scale(0.55);
+}
+
+.hub[data-state='open'] .sat[data-related='true'] .satBg {
+  transform: none;
+}
+
+.sat[data-related='true'] .satLabel {
+  opacity: 1;
+  fill: var(--c-signal);
+}
+
+.sat[data-related='true'] .satIcon {
+  color: var(--c-signal);
+}
+
+/* ---- core ---- */
+.coreOrbit {
+  fill: none;
+  stroke: var(--c-line-2);
+  stroke-dasharray: 1 7;
+  vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 40s linear infinite;
+}
+
+.coreRing {
+  fill: none;
+  stroke: var(--c-line-3);
+  vector-effect: non-scaling-stroke;
+}
+
+.coreFill {
+  fill: var(--c-surface-2);
+  stroke: var(--c-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.coreIcon {
+  color: var(--c-ice);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- HUD ---- */
+.hud {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  text-transform: uppercase;
+  color: var(--c-text-4);
+  pointer-events: none;
+}
+
+.hudRight {
+  display: inline-flex;
+  gap: var(--s-4);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- tooltip ---- */
+.tooltip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  display: grid;
+  gap: 6px;
+  width: 17rem;
+  padding: var(--s-4);
+  border: var(--border-2);
+  border-radius: var(--r-md);
+  background: rgba(14, 17, 20, 0.94);
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.8);
+  transform: translate(calc(var(--x) + 28px), calc(var(--y) - 50%));
+  pointer-events: none;
+  animation: tip-in 320ms var(--ease-out) both;
+}
+
+.tooltip[data-flip='true'] {
+  transform: translate(calc(var(--x) - 100% - 28px), calc(var(--y) - 50%));
+}
+
+@keyframes tip-in {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+  }
+}
+
+.tipCat {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  text-transform: uppercase;
+  color: var(--c-signal);
+}
+
+.tipName {
+  font-size: 1.125rem;
+  font-weight: var(--fw-medium);
+  letter-spacing: -0.015em;
+}
+
+.tipNote {
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--c-text-2);
+}
+
+.tipLinks {
+  margin-top: 4px;
+  padding-top: var(--s-2);
+  border-top: var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-text-3);
+}

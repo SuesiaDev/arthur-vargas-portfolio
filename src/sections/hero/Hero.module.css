@@ -1,0 +1,333 @@
+.hero {
+  position: relative;
+  z-index: var(--z-content);
+  min-height: 100svh;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  padding-top: calc(var(--nav-h) + var(--s-6));
+  padding-bottom: var(--s-6);
+  /* Let drags reach the 3D hit area; interactive children opt back in. */
+  pointer-events: none;
+}
+
+.inner a,
+.inner button {
+  pointer-events: auto;
+}
+
+/* ---- top row ---- */
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-4);
+}
+
+.kicker,
+.coords {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--c-text-2);
+}
+
+.bracket,
+.dim {
+  color: var(--c-text-4);
+}
+
+.kickerRule {
+  width: clamp(2rem, 4vw, 4rem);
+  height: 1px;
+  background: var(--c-line-3);
+}
+
+.coords {
+  gap: var(--s-4);
+  color: var(--c-text-3);
+}
+
+/* ---- intro ---- */
+.intro {
+  margin-top: auto;
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+  max-width: 31rem;
+}
+
+.tagline {
+  font-size: clamp(1.125rem, 1.45vw, 1.5rem);
+  line-height: 1.38;
+  letter-spacing: -0.012em;
+  color: var(--c-text);
+  text-wrap: balance;
+}
+
+.status {
+  margin-top: var(--s-5);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-text-2);
+}
+
+/* ---- name ---- */
+.name {
+  --name-size: var(--fs-mega);
+  position: relative;
+  display: grid;
+  font-size: var(--name-size);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-mega);
+  letter-spacing: var(--ls-mega);
+  text-transform: uppercase;
+  text-wrap: nowrap;
+  margin-left: -0.055em; /* optical alignment of the A */
+  /* Split letters lose pair kerning; turning it off everywhere keeps every
+     letter in exactly the same place before, during and after the entrance. */
+  font-kerning: none;
+}
+
+.nameLine {
+  display: flex;
+  align-items: flex-start;
+  overflow: clip;
+  padding-top: 0.05em;
+  margin-top: -0.05em;
+  color: #f2f6fa;
+  /* The metallic fade is a mask on the static line, never a background-clip:text
+     gradient on the letters: on split, moving glyphs Chromium paints that gradient
+     with every letter piled at the word's origin, and it clips the last letter. */
+  -webkit-mask-image: linear-gradient(180deg, #000 14%, rgba(0, 0, 0, 0.88) 52%, rgba(0, 0, 0, 0.56) 100%);
+  mask-image: linear-gradient(180deg, #000 14%, rgba(0, 0, 0, 0.88) 52%, rgba(0, 0, 0, 0.56) 100%);
+}
+
+.nameLine2 {
+  position: relative;
+  padding-left: calc((100% + var(--gutter)) / 12 * 2);
+}
+
+.word {
+  display: block;
+}
+
+.char {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ---- bottom ---- */
+.bottom {
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+}
+
+.rule {
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, var(--c-line-3), var(--c-line-2) 60%, var(--c-line));
+}
+
+/* The boot line becomes this rule — hidden until the hand-off lands. */
+:global(html.js:not(.reduced-motion)) .rule {
+  opacity: 0;
+}
+
+.bottomRow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--gutter);
+  padding-top: var(--s-5);
+}
+
+.role {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--c-text-2);
+}
+
+.ctas {
+  display: flex;
+  gap: var(--s-3);
+}
+
+.scroll {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  text-transform: uppercase;
+  color: var(--c-text-3);
+  transition: color var(--dur-fast) var(--ease-out-soft);
+}
+
+.scroll:hover {
+  color: var(--c-text);
+}
+
+.scrollTrack {
+  position: relative;
+  width: 1px;
+  height: 2rem;
+  overflow: hidden;
+  background: var(--c-line-2);
+}
+
+.scrollThumb {
+  position: absolute;
+  inset: 0;
+  background: var(--c-text);
+  animation: scroll-thumb 2.2s var(--ease-in-out) infinite;
+}
+
+@keyframes scroll-thumb {
+  0% {
+    transform: translateY(-100%);
+  }
+  55%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* ---- figure caption for the 3D ---- */
+.fig {
+  position: absolute;
+  z-index: 2;
+  right: var(--margin);
+  bottom: calc(var(--s-6) + 6.5rem);
+  display: grid;
+  gap: 4px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-micro);
+  text-transform: uppercase;
+  color: var(--c-text-3);
+  pointer-events: none;
+}
+
+.figTitle {
+  color: var(--c-text-2);
+}
+
+.figHint {
+  margin-top: var(--s-2);
+  color: var(--c-text-4);
+}
+
+.dragZone {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  top: 14%;
+  width: 52%;
+  height: 58%;
+  touch-action: pan-y;
+}
+
+/* ---- responsive ---- */
+@media (max-width: 1279px) {
+  .bottomRow {
+    grid-template-columns: auto 1fr;
+  }
+  .role {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .dragZone,
+  .fig,
+  .scroll {
+    display: none;
+  }
+  .bottomRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (hover: none) {
+  .dragZone,
+  .figHint {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .inner {
+    padding-top: calc(var(--nav-h) + var(--s-4));
+    padding-bottom: max(var(--s-5), env(safe-area-inset-bottom));
+  }
+
+  .coords span:first-child {
+    display: none;
+  }
+
+  .name {
+    --name-size: clamp(3.75rem, 21.5vw, 7rem);
+    order: 1;
+    margin-top: auto;
+  }
+
+  .nameLine2 {
+    padding-left: 0;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+  }
+
+  .intro {
+    order: 2;
+    margin: var(--s-6) 0 0;
+  }
+
+  .tagline {
+    font-size: 1.0625rem;
+  }
+
+  .status {
+    font-size: var(--fs-micro);
+  }
+
+  .bottom {
+    order: 3;
+    margin-top: var(--s-6);
+  }
+
+  .ctas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-2);
+  }
+
+  .ctas > :first-child {
+    grid-column: 1 / -1;
+  }
+
+  .ctas > * {
+    width: 100%;
+  }
+
+  .ctas > * > * {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,132 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  height: 3rem;
+  padding: 0 var(--s-5);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color var(--dur-ui) var(--ease-out-soft),
+    border-color var(--dur-ui) var(--ease-out-soft),
+    background-color var(--dur-ui) var(--ease-out-soft);
+}
+
+/* Fill that rises from the bottom on hover */
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  transform: translateY(101%);
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+.index {
+  color: var(--c-text-3);
+  transition: color var(--dur-ui) var(--ease-out-soft);
+}
+
+/* Label rolls over to a duplicate copy on hover */
+.label {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 1.4em;
+}
+
+.labelInner {
+  display: block;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+.labelInner[data-text]::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 100%;
+}
+
+.icon {
+  display: inline-grid;
+  place-items: center;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .button:hover .labelInner[data-text] {
+    transform: translateY(-100%);
+  }
+  .button:hover::before {
+    transform: none;
+  }
+  .button:hover .icon {
+    transform: rotate(-45deg);
+  }
+}
+
+/* ---- variants ---- */
+.primary {
+  background: var(--c-text);
+  color: var(--c-void);
+}
+
+.primary::before {
+  background: var(--c-ice);
+}
+
+.primary .index {
+  color: rgba(3, 4, 5, 0.45);
+}
+
+.ghost {
+  border: 1px solid var(--c-line-2);
+  color: var(--c-text);
+  background: rgba(10, 12, 14, 0.4);
+}
+
+.ghost::before {
+  background: rgba(220, 235, 251, 0.06);
+}
+
+@media (hover: hover) {
+  .ghost:hover {
+    border-color: var(--c-line-3);
+  }
+}
+
+.text {
+  height: auto;
+  padding: var(--s-2) 0;
+  border-radius: 0;
+  color: var(--c-text-2);
+}
+
+.text::before {
+  display: none;
+}
+
+@media (hover: hover) {
+  .text:hover {
+    color: var(--c-text);
+  }
+}
+
+.button:active {
+  transition-duration: var(--dur-fast);
+}
+
+@media (max-width: 767px) {
+  .button {
+    height: 2.875rem;
+    padding: 0 var(--s-4);
+  }
+}
